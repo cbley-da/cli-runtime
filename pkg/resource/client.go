@@ -31,6 +31,7 @@ func (clientConfigFn ClientConfigFunc) clientForGroupVersion(gv schema.GroupVers
 	if negotiatedSerializer != nil {
 		cfg.ContentConfig.NegotiatedSerializer = negotiatedSerializer
 	}
+	cfg = rest.CopyConfig(cfg)
 	cfg.GroupVersion = &gv
 	if len(gv.Group) == 0 {
 		cfg.APIPath = "/api"
@@ -46,6 +47,7 @@ func (clientConfigFn ClientConfigFunc) unstructuredClientForGroupVersion(gv sche
 	if err != nil {
 		return nil, err
 	}
+	cfg = rest.CopyConfig(cfg)
 	cfg.ContentConfig = UnstructuredPlusDefaultContentConfig()
 	cfg.GroupVersion = &gv
 	if len(gv.Group) == 0 {
